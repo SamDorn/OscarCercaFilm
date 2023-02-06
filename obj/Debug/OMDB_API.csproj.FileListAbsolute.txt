@@ -3,7 +3,6 @@ C:\Users\Nome\Documents\GitHub\OMDB_API\bin\Debug\OMDB_API.exe
 C:\Users\Nome\Documents\GitHub\OMDB_API\bin\Debug\OMDB_API.pdb
 C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.AssemblyReference.cache
 C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.SuggestedBindingRedirects.cache
-C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.Form1.resources
 C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.Properties.Resources.resources
 C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.GenerateResource.cache
 C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.CoreCompileInputs.cache
@@ -80,3 +79,4 @@ C:\Users\Vladimir\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.CoreCompil
 C:\Users\Vladimir\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.csproj.CopyComplete
 C:\Users\Vladimir\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.exe
 C:\Users\Vladimir\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.pdb
+C:\Users\Nome\Documents\GitHub\OMDB_API\obj\Debug\OMDB_API.FormPrincipale.resources

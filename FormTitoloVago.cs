@@ -10,12 +10,13 @@ namespace OMDB_API
 {
     public partial class FormTitoloVago : Form
     {
+        private int page = 1;
+        public string search { get; set; }
         static HttpClient client = new HttpClient();
         static string apiKey = "61f7411";
         public RisultatoRicerca risultatoRicerca { set; get; }
         public FormTitoloVago()
         {
-            InitializeComponent();
             InitializeComponent();
             client.BaseAddress = new Uri("http://www.omdbapi.com/");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -52,6 +53,7 @@ namespace OMDB_API
                 num += 1;
                 if (num == 6)
                     break;
+                
                 PictureBox pictureBox = new PictureBox();
                 pictureBox.Location = new Point(x, y);
                 pictureBox.Size = new Size(width, height);
@@ -67,7 +69,7 @@ namespace OMDB_API
                 linkLabel.Location = new Point(x + 100, y + 35);
                 linkLabel.Text = risultatoRicerca.Search[i].Title;
                 linkLabel.Font = new Font("Arial", 12);
-                linkLabel.Size = new Size(200, 100);
+                linkLabel.Size = new Size(200, 50);
                 linkLabel.Click += async (s, e) => 
                 {
 
@@ -103,7 +105,7 @@ namespace OMDB_API
                 linkLabel.Location = new Point(x + 400, y+35);
                 linkLabel.Text = risultatoRicerca.Search[i].Title;
                 linkLabel.Font = new Font("Arial", 12);
-                linkLabel.Size = new Size(200, 100);
+                linkLabel.Size = new Size(200, 50);
                 
                 linkLabel.Click += async (s, e) =>
                 {
@@ -119,8 +121,44 @@ namespace OMDB_API
 
                 y += height;
 
+                if(i == 9)
+                {
+                    Button button= new Button();
+                    button.Location = new Point(x+250,y+20);
+                    button.Size = new Size(100, 50);
+                    button.Text = "Visualizza altri";
+                    button.Font = new Font("Arial", 8);
+
+                    button.Click += async (s, e) =>
+                    {
+
+                        FormTitoloVago formTitoloVago = new FormTitoloVago();
+                        formTitoloVago.page += 1;
+
+                        formTitoloVago.risultatoRicerca = await GetFilmVagoAsync($"{search}&page={formTitoloVago.page}");
+
+                        formTitoloVago.Show();
+                        
+                        Close();
+
+                    };
+                    Controls.Add(button);
+
+                }
+            }
+
+        }
+        private static async Task<RisultatoRicerca> GetFilmVagoAsync(string s)
+        {
+            RisultatoRicerca risultatoRicerca = null;
+            HttpResponseMessage response = await client.GetAsync(s);
+            if (response.IsSuccessStatusCode)
+            {
+                risultatoRicerca = await JsonSerializer.DeserializeAsync<RisultatoRicerca>(await response.Content.ReadAsStreamAsync());
+
 
             }
+            return risultatoRicerca;
         }
     }
 }

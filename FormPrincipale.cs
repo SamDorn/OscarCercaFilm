@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace OMDB_API
 {
-    public partial class Form1 : Form
+    public partial class FormPrincipale : Form
     {
         static HttpClient client = new HttpClient();
         static string apiKey = "61f7411";
@@ -16,7 +16,7 @@ namespace OMDB_API
         RisultatoRicerca risultatoRicerca = null;
 
 
-        public Form1()
+        public FormPrincipale()
         {
             InitializeComponent();
             client.BaseAddress = new Uri("http://www.omdbapi.com/");
@@ -46,6 +46,7 @@ namespace OMDB_API
                     MessageBox.Show("Film non trovato o troppi film", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                formTitoloVago.search = $"?apikey={apiKey}&s={txt_box_title.Text}";
                 formTitoloVago.Show();
             }
         }

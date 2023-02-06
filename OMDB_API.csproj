@@ -117,11 +117,11 @@
   <ItemGroup>
     <Compile Include="Film.cs" />
     <Compile Include="FilmPreciso.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormPrincipale.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormPrincipale.Designer.cs">
+      <DependentUpon>FormPrincipale.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTitoloPreciso.cs">
       <SubType>Form</SubType>
@@ -137,8 +137,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormPrincipale.resx">
+      <DependentUpon>FormPrincipale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTitoloPreciso.resx">
       <DependentUpon>FormTitoloPreciso.cs</DependentUpon>

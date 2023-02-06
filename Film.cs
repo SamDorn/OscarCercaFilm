@@ -10,10 +10,5 @@ namespace OMDB_API
         public string Type { get; set; }
         public string Poster { get; set; }
 
-        override
-        public string ToString()
-        {
-            return "Titolo: " + Title + Environment.NewLine + "Anno: " + Year + Environment.NewLine + "Tipo: " + Type + Environment.NewLine;
-        }
     }
 }
