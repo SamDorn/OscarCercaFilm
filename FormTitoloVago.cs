@@ -21,7 +21,7 @@ namespace OMDB_API
     {
         static HttpClient client = new HttpClient();
         static string apiKey = "61f7411";
-        public Film[] film { set; get; }
+        public RisultatoRicerca risultatoRicerca { set; get; }
         public FormTitoloVago()
         {
             InitializeComponent();
@@ -55,18 +55,23 @@ namespace OMDB_API
         }
         private void GenerateControls()
         {
+            int num = 0;
             int x = 10;
             int y = 10;
             int height = 100;
             int width = 100;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i <risultatoRicerca.Search.Length; i++)
             {
+                num += 1;
+                if (num == 6)
+                    break;      
                 PictureBox pictureBox = new PictureBox();
                 pictureBox.Location = new Point(x, y);
                 pictureBox.Size = new Size(width, height);
-                pictureBox.Load("https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c21hbGx8ZW58MHx8MHx8&w=1000&q=80");
-                this.Controls.Add(pictureBox);
+                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox.Load(risultatoRicerca.Search[i].Poster);
+                Controls.Add(pictureBox);
 
                 for (int j = 0; j < 3; j++)
                 {
@@ -77,6 +82,17 @@ namespace OMDB_API
                 }
 
                 y += height;
+            }
+            height = 100;
+            y = 10;
+            for(int i = num-1; i < risultatoRicerca.Search.Length; i++)
+            {
+                PictureBox pictureBox = new PictureBox();
+                pictureBox.Location = new Point(x+300, y);
+                pictureBox.Size = new Size(width, height);
+                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox.Load(risultatoRicerca.Search[i].Poster);
+                Controls.Add(pictureBox); y += height;
             }
         }
     }

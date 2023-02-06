@@ -23,7 +23,8 @@ namespace OMDB_API
         static string apiKey = "61f7411";
 
         public FilmPreciso filmPreciso = null;
-        Film[] film = null;
+        RisultatoRicerca risultatoRicerca = null;
+
 
         public Form1()
         {
@@ -47,9 +48,9 @@ namespace OMDB_API
             }
             else
             {
-                FormTitoloVago formTitoloVago= new FormTitoloVago();
-                //film = await GetFilmVagoAsync($"?apikey={apiKey}&s={txt_box_title.Text}");
-                //formTitoloVago.film = film;
+                FormTitoloVago formTitoloVago = new FormTitoloVago();
+                risultatoRicerca = await GetFilmVagoAsync($"?apikey={apiKey}&s={txt_box_title.Text}");
+                formTitoloVago.risultatoRicerca= risultatoRicerca;
                 formTitoloVago.Show();
             }
         }
@@ -64,21 +65,27 @@ namespace OMDB_API
             }
             return filmPreciso;
         }
-        private static async Task<Film[]> GetFilmVagoAsync(string s)
+        private static async Task<RisultatoRicerca> GetFilmVagoAsync(string s)
         {
-            Film[] filmVago = null;
+            RisultatoRicerca risultatoRicerca = null;
             HttpResponseMessage response = await client.GetAsync(s);
             if (response.IsSuccessStatusCode)
             {
-                for(int i = 0; i < 9; i++)
-                {
-                    Film film = await JsonSerializer.DeserializeAsync<Film>(await response.Content.ReadAsStreamAsync());
+                    risultatoRicerca = await JsonSerializer.DeserializeAsync<RisultatoRicerca>(await response.Content.ReadAsStreamAsync());
 
-                    filmVago.Append(film);
-                }
-                
+
             }
-            return filmVago;
+            return risultatoRicerca;
         }
     }
+
+
+    public class RisultatoRicerca 
+    {
+        public Film[] Search { get; set; }
+        public string totalResults { get; set; }
+        public string Response { get; set; }
+    }
+
+
 }
