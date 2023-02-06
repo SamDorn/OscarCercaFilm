@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMDB_API
 {
-    public class Film 
+    public class Film
     {
         public string Title { get; set; }
         public string Year { get; set; }
@@ -17,7 +13,7 @@ namespace OMDB_API
         override
         public string ToString()
         {
-            return "Titolo: " + Title+ Environment.NewLine + "Anno: " + Year + Environment.NewLine + "Tipo: " + Type + Environment.NewLine;
+            return "Titolo: " + Title + Environment.NewLine + "Anno: " + Year + Environment.NewLine + "Tipo: " + Type + Environment.NewLine;
         }
     }
 }

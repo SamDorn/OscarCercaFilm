@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMDB_API
+﻿namespace OMDB_API
 {
     public class FilmPreciso : Film
     {

@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Windows.Forms.VisualStyles;
-using System.IO;
-using System.Xml.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OMDB_API
 {
@@ -37,12 +28,6 @@ namespace OMDB_API
             GenerateControls();
         }
 
-        private async void label_title_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            FormTitoloPreciso formTitoloPreciso= new FormTitoloPreciso();
-            //formTitoloPreciso.filmPreciso = await GetFilmPrecisoAsync($"?apikey={apiKey}&t={label_title.Text}");
-            formTitoloPreciso.Show();
-        }
         private static async Task<FilmPreciso> GetFilmPrecisoAsync(string s)
         {
             FilmPreciso filmPreciso = null;
@@ -53,6 +38,7 @@ namespace OMDB_API
             }
             return filmPreciso;
         }
+        
         private void GenerateControls()
         {
             int num = 0;
@@ -61,38 +47,79 @@ namespace OMDB_API
             int height = 100;
             int width = 100;
 
-            for (int i = 0; i <risultatoRicerca.Search.Length; i++)
+            for (int i = 0; i < risultatoRicerca.Search.Length; i++)
             {
                 num += 1;
                 if (num == 6)
-                    break;      
+                    break;
                 PictureBox pictureBox = new PictureBox();
                 pictureBox.Location = new Point(x, y);
                 pictureBox.Size = new Size(width, height);
                 pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox.Load(risultatoRicerca.Search[i].Poster);
+                if (risultatoRicerca.Search[i].Poster == "N/A")
+                    pictureBox.Load("https://thegoldrivercompany.com.au/wp-content/uploads/2017/09/not-available.jpg");
+                else
+                    pictureBox.Load(risultatoRicerca.Search[i].Poster);
                 Controls.Add(pictureBox);
 
-                for (int j = 0; j < 3; j++)
+                Controls.Add(pictureBox);
+                LinkLabel linkLabel = new LinkLabel();
+                linkLabel.Location = new Point(x + 100, y + 35);
+                linkLabel.Text = risultatoRicerca.Search[i].Title;
+                linkLabel.Font = new Font("Arial", 12);
+                linkLabel.Size = new Size(200, 100);
+                linkLabel.Click += async (s, e) => 
                 {
-                    Label label = new Label();
-                    label.Location = new Point(x+100, y + height);
-                    label.Text = "Label " + (j + 1);
-                    Controls.Add(label);
-                }
+
+                    FormTitoloPreciso formTitoloPreciso = new FormTitoloPreciso();
+
+                    formTitoloPreciso.filmPreciso = await GetFilmPrecisoAsync($"?apikey={apiKey}&t={linkLabel.Text}");
+
+                    formTitoloPreciso.Show();
+
+                };
+                Controls.Add(linkLabel);
 
                 y += height;
             }
             height = 100;
             y = 10;
-            for(int i = num-1; i < risultatoRicerca.Search.Length; i++)
+            for (int i = num - 1; i < risultatoRicerca.Search.Length; i++)
             {
+                if (num == risultatoRicerca.Search.Length)
+                    break;
                 PictureBox pictureBox = new PictureBox();
-                pictureBox.Location = new Point(x+300, y);
+                pictureBox.Location = new Point(x + 300, y);
                 pictureBox.Size = new Size(width, height);
                 pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox.Load(risultatoRicerca.Search[i].Poster);
-                Controls.Add(pictureBox); y += height;
+                if (risultatoRicerca.Search[i].Poster == "N/A")
+                    pictureBox.Load("https://thegoldrivercompany.com.au/wp-content/uploads/2017/09/not-available.jpg");
+
+                else
+                    pictureBox.Load(risultatoRicerca.Search[i].Poster);
+                
+                Controls.Add(pictureBox);
+                LinkLabel linkLabel = new LinkLabel();
+                linkLabel.Location = new Point(x + 400, y+35);
+                linkLabel.Text = risultatoRicerca.Search[i].Title;
+                linkLabel.Font = new Font("Arial", 12);
+                linkLabel.Size = new Size(200, 100);
+                
+                linkLabel.Click += async (s, e) =>
+                {
+
+                    FormTitoloPreciso formTitoloPreciso = new FormTitoloPreciso();
+
+                    formTitoloPreciso.filmPreciso = await GetFilmPrecisoAsync($"?apikey={apiKey}&t={linkLabel.Text}");
+
+                    formTitoloPreciso.Show();
+
+                };
+                Controls.Add(linkLabel);
+
+                y += height;
+
+
             }
         }
     }

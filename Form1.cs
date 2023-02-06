@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Windows.Forms.VisualStyles;
-using System.IO;
-using System.Xml.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OMDB_API
 {
@@ -50,7 +40,12 @@ namespace OMDB_API
             {
                 FormTitoloVago formTitoloVago = new FormTitoloVago();
                 risultatoRicerca = await GetFilmVagoAsync($"?apikey={apiKey}&s={txt_box_title.Text}");
-                formTitoloVago.risultatoRicerca= risultatoRicerca;
+                formTitoloVago.risultatoRicerca = risultatoRicerca;
+                if (risultatoRicerca.Response == "False")
+                {
+                    MessageBox.Show("Film non trovato o troppi film", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 formTitoloVago.Show();
             }
         }
@@ -71,7 +66,7 @@ namespace OMDB_API
             HttpResponseMessage response = await client.GetAsync(s);
             if (response.IsSuccessStatusCode)
             {
-                    risultatoRicerca = await JsonSerializer.DeserializeAsync<RisultatoRicerca>(await response.Content.ReadAsStreamAsync());
+                risultatoRicerca = await JsonSerializer.DeserializeAsync<RisultatoRicerca>(await response.Content.ReadAsStreamAsync());
 
 
             }
@@ -80,7 +75,7 @@ namespace OMDB_API
     }
 
 
-    public class RisultatoRicerca 
+    public class RisultatoRicerca
     {
         public Film[] Search { get; set; }
         public string totalResults { get; set; }

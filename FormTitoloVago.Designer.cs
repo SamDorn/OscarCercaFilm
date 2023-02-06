@@ -32,10 +32,11 @@
             // 
             // FormTitoloVago
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(401, 450);
+            this.ClientSize = new System.Drawing.Size(631, 554);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormTitoloVago";
             this.Text = "FormTitoloVago";
             this.Load += new System.EventHandler(this.FormTitoloVago_Load);
