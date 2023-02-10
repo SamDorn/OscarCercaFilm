@@ -46,7 +46,7 @@ namespace OMDB_API
                     MessageBox.Show("Film non trovato o troppi film", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                formTitoloVago.search = $"?apikey={apiKey}&s={txt_box_title.Text}";
+                formTitoloVago.title = txt_box_title.Text;
                 formTitoloVago.Show();
             }
         }

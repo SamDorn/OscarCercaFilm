@@ -10,15 +10,27 @@ namespace OMDB_API
 {
     public partial class FormTitoloVago : Form
     {
+        public string title { get; set; }
         private int page = 1;
         public string search { get; set; }
-        static HttpClient client = new HttpClient();
-        static string apiKey = "61f7411";
+        string apiKey = "61f7411";
+        static HttpClient client = null;
         public RisultatoRicerca risultatoRicerca { set; get; }
         public FormTitoloVago()
         {
             InitializeComponent();
-            client.BaseAddress = new Uri("http://www.omdbapi.com/");
+
+            client = new HttpClient();
+            try
+            {
+                client.BaseAddress = new Uri("http://www.omdbapi.com/");
+            }
+            catch 
+            {
+                client = null;
+                client.BaseAddress = new Uri("http://www.omdbapi.com/");
+            }
+            
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -133,11 +145,12 @@ namespace OMDB_API
                     {
 
                         FormTitoloVago formTitoloVago = new FormTitoloVago();
-                        formTitoloVago.page += 1;
+                        formTitoloVago.page = page +1;
+                        formTitoloVago.title = title;
 
-                        formTitoloVago.risultatoRicerca = await GetFilmVagoAsync($"{search}&page={formTitoloVago.page}");
+                        formTitoloVago.risultatoRicerca = await FormTitoloVago.GetFilmVagoAsync($"?apikey={formTitoloVago.apiKey}&s={formTitoloVago.title}&page={formTitoloVago.page}");
 
-                        formTitoloVago.Show();
+                        formTitoloVago.Show(); 
                         
                         Close();
 
@@ -148,7 +161,7 @@ namespace OMDB_API
             }
 
         }
-        private static async Task<RisultatoRicerca> GetFilmVagoAsync(string s)
+        public static async Task<RisultatoRicerca> GetFilmVagoAsync(string s)
         {
             RisultatoRicerca risultatoRicerca = null;
             HttpResponseMessage response = await client.GetAsync(s);
